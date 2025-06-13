@@ -1,0 +1,80 @@
+---
+title: "Do people who frequently listen to certain music genres report better or worse mental health outcomes??"
+subtitle: "Assignment 4 ETC5512"
+author: "Yilin Zhang"
+format: html
+editor: visual
+---
+
+::: panel-tabset
+<!-- Task 1 Tab: Data and Documenting -->
+
+## Data and Documenting
+
+### Research Question
+
+Can music help improve mental health, and if so, do different music genres have different impacts on specific mental health issues?
+
+-   Whether frequent listening to certain genres if associated with lower anxiety, depression, insomnia, or OCD levels.
+
+-   Whether certain genres are more effective for specific mental health concerns.
+
+-   Whether listening conditions, such as listening while working or total hours per day might affect the mental health outcomes of music.
+
+These questions aim to provide insights into how music could be a personalized, feasible tool to improve emotional well-being.
+
+### Data Set and Suitability
+
+In order to solve my doubts, I uses the "Music & Mental Health Survey" data set, which is published on Kaggle by Catherine Rasgaitis. This data set contains 736 public questionnaire surveys from Google.
+
+This data set is highly suitable as the foundation for conducting research.
+
+-   Listening preference: frequency of listening to specific genres, Music style preference, Primary streaming platform.
+
+-   Mental health indicators: self-reported anxiety, depression, insomnia, and OCD.
+
+-   Listening habits: whether respondent listen to music while work, play an instrument regularly, how many hours per day they listen and so on.
+
+These data is helpful for exploring the positive impact of different genres of music on mental health.
+
+### Data Description
+
+-   Data set name: Music & Mental Health Survey
+
+-   Source: \[Kaggle Dataset\](<https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results>)
+
+-   
+
+### Remember
+
+Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+
+<!-- Task 2 Tab: Writing your blogpost -->
+
+## Blog post
+
+### What's in this section
+
+Here is where you should write your blogpost! (Task 2)
+
+### Blogpost Structure
+
+There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+
+1.  Title (is set at the top of this document)
+2.  Motivation\
+3.  Data\
+4.  Analysis\
+5.  Conclusions\
+6.  References
+
+<!-- Task 3 Tab: Behind the Scenes -  -->
+
+## Behind the Scenes
+
+### What's in this section
+
+Here is where you should tell us about your reflection on your analysis (Task 3).
+
+Again, these are the details about **your** perspective and the gritty details behind the scenes of your analysis.
+:::
