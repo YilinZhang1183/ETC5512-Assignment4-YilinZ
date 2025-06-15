@@ -21,19 +21,53 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { display: inline-block; text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
 </style>
 
 
-<script src="assignment4_template_Yilin Zhang _files/libs/clipboard/clipboard.min.js"></script>
-<script src="assignment4_template_Yilin Zhang _files/libs/quarto-html/quarto.js"></script>
-<script src="assignment4_template_Yilin Zhang _files/libs/quarto-html/popper.min.js"></script>
-<script src="assignment4_template_Yilin Zhang _files/libs/quarto-html/tippy.umd.min.js"></script>
-<script src="assignment4_template_Yilin Zhang _files/libs/quarto-html/anchor.min.js"></script>
-<link href="assignment4_template_Yilin Zhang _files/libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="assignment4_template_Yilin Zhang _files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="assignment4_template_Yilin Zhang _files/libs/bootstrap/bootstrap.min.js"></script>
-<link href="assignment4_template_Yilin Zhang _files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="assignment4_template_Yilin Zhang _files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script src="assignment4_template_YilinZhang _files/libs/clipboard/clipboard.min.js"></script>
+<script src="assignment4_template_YilinZhang _files/libs/quarto-html/quarto.js"></script>
+<script src="assignment4_template_YilinZhang _files/libs/quarto-html/popper.min.js"></script>
+<script src="assignment4_template_YilinZhang _files/libs/quarto-html/tippy.umd.min.js"></script>
+<script src="assignment4_template_YilinZhang _files/libs/quarto-html/anchor.min.js"></script>
+<link href="assignment4_template_YilinZhang _files/libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="assignment4_template_YilinZhang _files/libs/quarto-html/quarto-syntax-highlighting-2f5df379a58b258e96c21c0638c20c03.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="assignment4_template_YilinZhang _files/libs/bootstrap/bootstrap.min.js"></script>
+<link href="assignment4_template_YilinZhang _files/libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="assignment4_template_YilinZhang _files/libs/bootstrap/bootstrap-1bc8a17f135ab3d594c857e9f48e611b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 
 
 </head>
@@ -102,6 +136,144 @@ ul.task-list li input[type="checkbox"] {
 <li><p>Source: [Kaggle Dataset](<a href="https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results" class="uri">https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results</a>)</p></li>
 <li></li>
 </ul>
+</section>
+<section id="data-preparation" class="level3">
+<h3 class="anchored" data-anchor-id="data-preparation">Data Preparation</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>── Attaching core tidyverse packages ──────────────────────── tidyverse 2.0.0 ──
+✔ dplyr     1.1.4     ✔ readr     2.1.5
+✔ forcats   1.0.0     ✔ stringr   1.5.1
+✔ ggplot2   3.5.1     ✔ tibble    3.2.1
+✔ lubridate 1.9.4     ✔ tidyr     1.3.1
+✔ purrr     1.0.4     
+── Conflicts ────────────────────────────────────────── tidyverse_conflicts() ──
+✖ dplyr::filter() masks stats::filter()
+✖ dplyr::lag()    masks stats::lag()
+ℹ Use the conflicted package (&lt;http://conflicted.r-lib.org/&gt;) to force all conflicts to become errors</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(janitor)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>
+Attaching package: 'janitor'
+
+The following objects are masked from 'package:stats':
+
+    chisq.test, fisher.test</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="co"># reading data</span></span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>music_raw <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"data/mxmh_survey_results.csv"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">clean_names</span>()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stderr">
+<pre><code>Rows: 736 Columns: 33
+── Column specification ────────────────────────────────────────────────────────
+Delimiter: ","
+chr (26): Timestamp, Primary streaming service, While working, Instrumentali...
+dbl  (7): Age, Hours per day, BPM, Anxiety, Depression, Insomnia, OCD
+
+ℹ Use `spec()` to retrieve the full column specification for this data.
+ℹ Specify the column types or set `show_col_types = FALSE` to quiet this message.</code></pre>
+</div>
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="co"># transfrom frequency text into numerical value</span></span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>freq_map <span class="ot">&lt;-</span> <span class="fu">c</span>(<span class="st">"Never"</span> <span class="ot">=</span> <span class="dv">0</span>, <span class="st">"Rarely"</span> <span class="ot">=</span> <span class="dv">1</span>, <span class="st">"Sometimes"</span> <span class="ot">=</span> <span class="dv">2</span>, <span class="st">"Very frequently"</span> <span class="ot">=</span> <span class="dv">3</span>)</span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="co"># create and name new columns</span></span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>music <span class="ot">&lt;-</span> music_raw <span class="sc">|&gt;</span> </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="fu">across</span>(<span class="fu">starts_with</span>(<span class="st">"frequency_"</span>), <span class="sc">~</span> freq_map[.x], <span class="at">.names =</span> <span class="st">"num_{.col}"</span>))</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="co"># only keep the records which are not missing</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>music_clean <span class="ot">&lt;-</span> music <span class="sc">|&gt;</span> </span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(anxiety), <span class="sc">!</span><span class="fu">is.na</span>(depression), <span class="sc">!</span><span class="fu">is.na</span>(insomnia), <span class="sc">!</span><span class="fu">is.na</span>(ocd))</span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="fu">glimpse</span>(music_clean)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Rows: 736
+Columns: 49
+$ timestamp                      &lt;chr&gt; "8/27/2022 19:29:02", "8/27/2022 19:57:…
+$ age                            &lt;dbl&gt; 18, 63, 18, 61, 18, 18, 18, 21, 19, 18,…
+$ primary_streaming_service      &lt;chr&gt; "Spotify", "Pandora", "Spotify", "YouTu…
+$ hours_per_day                  &lt;dbl&gt; 3.0, 1.5, 4.0, 2.5, 4.0, 5.0, 3.0, 1.0,…
+$ while_working                  &lt;chr&gt; "Yes", "Yes", "No", "Yes", "Yes", "Yes"…
+$ instrumentalist                &lt;chr&gt; "Yes", "No", "No", "No", "No", "Yes", "…
+$ composer                       &lt;chr&gt; "Yes", "No", "No", "Yes", "No", "Yes", …
+$ fav_genre                      &lt;chr&gt; "Latin", "Rock", "Video game music", "J…
+$ exploratory                    &lt;chr&gt; "Yes", "Yes", "No", "Yes", "Yes", "Yes"…
+$ foreign_languages              &lt;chr&gt; "Yes", "No", "Yes", "Yes", "No", "Yes",…
+$ bpm                            &lt;dbl&gt; 156, 119, 132, 84, 107, 86, 66, 95, 94,…
+$ frequency_classical            &lt;chr&gt; "Rarely", "Sometimes", "Never", "Someti…
+$ frequency_country              &lt;chr&gt; "Never", "Never", "Never", "Never", "Ne…
+$ frequency_edm                  &lt;chr&gt; "Rarely", "Never", "Very frequently", "…
+$ frequency_folk                 &lt;chr&gt; "Never", "Rarely", "Never", "Rarely", "…
+$ frequency_gospel               &lt;chr&gt; "Never", "Sometimes", "Never", "Sometim…
+$ frequency_hip_hop              &lt;chr&gt; "Sometimes", "Rarely", "Rarely", "Never…
+$ frequency_jazz                 &lt;chr&gt; "Never", "Very frequently", "Rarely", "…
+$ frequency_k_pop                &lt;chr&gt; "Very frequently", "Rarely", "Very freq…
+$ frequency_latin                &lt;chr&gt; "Very frequently", "Sometimes", "Never"…
+$ frequency_lofi                 &lt;chr&gt; "Rarely", "Rarely", "Sometimes", "Somet…
+$ frequency_metal                &lt;chr&gt; "Never", "Never", "Sometimes", "Never",…
+$ frequency_pop                  &lt;chr&gt; "Very frequently", "Sometimes", "Rarely…
+$ frequency_r_b                  &lt;chr&gt; "Sometimes", "Sometimes", "Never", "Som…
+$ frequency_rap                  &lt;chr&gt; "Very frequently", "Rarely", "Rarely", …
+$ frequency_rock                 &lt;chr&gt; "Never", "Very frequently", "Rarely", "…
+$ frequency_video_game_music     &lt;chr&gt; "Sometimes", "Rarely", "Very frequently…
+$ anxiety                        &lt;dbl&gt; 3, 7, 7, 9, 7, 8, 4, 5, 2, 2, 7, 1, 9, …
+$ depression                     &lt;dbl&gt; 0, 2, 7, 7, 2, 8, 8, 3, 0, 2, 7, 0, 3, …
+$ insomnia                       &lt;dbl&gt; 1, 2, 10, 3, 5, 7, 6, 5, 0, 5, 4, 0, 2,…
+$ ocd                            &lt;dbl&gt; 0, 1, 2, 3, 9, 7, 0, 3, 0, 1, 7, 1, 7, …
+$ music_effects                  &lt;chr&gt; NA, NA, "No effect", "Improve", "Improv…
+$ permissions                    &lt;chr&gt; "I understand.", "I understand.", "I un…
+$ num_frequency_classical        &lt;dbl&gt; 1, 2, 0, 2, 0, 1, 2, 0, 0, 1, 0, 1, 1, …
+$ num_frequency_country          &lt;dbl&gt; 0, 0, 0, 0, 0, 2, 0, 0, 3, 1, 3, 0, 0, …
+$ num_frequency_edm              &lt;dbl&gt; 1, 0, 3, 0, 1, 0, 1, 1, 0, 1, 0, 3, 1, …
+$ num_frequency_folk             &lt;dbl&gt; 0, 1, 0, 1, 0, 0, 2, 0, 2, 1, 0, 0, 0, …
+$ num_frequency_gospel           &lt;dbl&gt; 0, 2, 0, 2, 1, 0, 1, 0, 0, 2, 0, 0, 0, …
+$ num_frequency_hip_hop          &lt;dbl&gt; 2, 1, 1, 0, 3, 2, 1, 3, 0, 1, 0, 2, 3, …
+$ num_frequency_jazz             &lt;dbl&gt; 0, 3, 1, 3, 0, 3, 2, 1, 0, 1, 0, 1, 0, …
+$ num_frequency_k_pop            &lt;dbl&gt; 3, 1, 3, 2, 3, 3, 0, 3, 0, 0, 0, 1, 2, …
+$ num_frequency_latin            &lt;dbl&gt; 3, 2, 0, 3, 2, 1, 1, 0, 0, 1, 0, 1, 0, …
+$ num_frequency_lofi             &lt;dbl&gt; 1, 1, 2, 2, 2, 3, 1, 2, 0, 1, 0, 1, 3, …
+$ num_frequency_metal            &lt;dbl&gt; 0, 0, 2, 0, 0, 1, 1, 0, 3, 0, 0, 0, 0, …
+$ num_frequency_pop              &lt;dbl&gt; 3, 2, 1, 2, 2, 3, 1, 2, 0, 2, 1, 1, 2, …
+$ num_frequency_r_b              &lt;dbl&gt; 2, 2, 0, 2, 3, 3, 1, 2, 0, 2, 1, 1, 2, …
+$ num_frequency_rap              &lt;dbl&gt; 3, 1, 1, 0, 3, 3, 0, 1, 0, 1, 0, 2, 1, …
+$ num_frequency_rock             &lt;dbl&gt; 0, 3, 1, 0, 0, 3, 0, 0, 3, 2, 1, 1, 1, …
+$ num_frequency_video_game_music &lt;dbl&gt; 2, 1, 3, 0, 1, 0, 2, 1, 0, 2, 0, 1, 0, …</code></pre>
+</div>
+</div>
+</section>
+<section id="does-listening-to-certain-gernes-help-reduce-anxiety" class="level3">
+<h3 class="anchored" data-anchor-id="does-listening-to-certain-gernes-help-reduce-anxiety">Does listening to certain gernes help reduce anxiety?</h3>
+<div class="cell">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>music_long <span class="ot">&lt;-</span> music_clean <span class="sc">|&gt;</span> </span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(anxiety, <span class="fu">starts_with</span>(<span class="st">"num_frequency_"</span>)) <span class="sc">|&gt;</span> </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="at">cols =</span> <span class="fu">starts_with</span>(<span class="st">"num_frequency_"</span>),</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">names_to =</span> <span class="st">"genre"</span>,</span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">values_to =</span> <span class="st">"frequency"</span>) <span class="sc">|&gt;</span> </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(</span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">genre =</span> <span class="fu">str_remove</span>(genre, <span class="st">"num_frequency_"</span>),</span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">genre =</span> <span class="fu">str_replace_all</span>(genre, <span class="st">"_"</span>, <span class="st">" "</span>) <span class="sc">|&gt;</span> <span class="fu">str_to_title</span>()</span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>  )</span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>filtered <span class="ot">&lt;-</span> music_long <span class="sc">|&gt;</span> <span class="fu">filter</span>(frequency <span class="sc">&gt;=</span> <span class="dv">2</span>)</span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="fu">ggplot</span>(filtered, <span class="fu">aes</span>(<span class="at">x =</span> <span class="fu">reorder</span>(genre, anxiety, median), <span class="at">y =</span> anxiety)) <span class="sc">+</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_boxplot</span>(<span class="at">fill =</span> <span class="st">"skyblue"</span>) <span class="sc">+</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"Anxiety levels among frequent listeners of different music genres"</span>,</span>
+<span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">"Music Genre"</span>,</span>
+<span id="cb9-18"><a href="#cb9-18" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"Anxiety Score (0–10)"</span></span>
+<span id="cb9-19"><a href="#cb9-19" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
+<span id="cb9-20"><a href="#cb9-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_minimal</span>() <span class="sc">+</span></span>
+<span id="cb9-21"><a href="#cb9-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(<span class="at">axis.text.x =</span> <span class="fu">element_text</span>(<span class="at">angle =</span> <span class="dv">45</span>, <span class="at">hjust =</span> <span class="dv">1</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output-display">
+<div>
+<figure class="figure">
+<p><img src="assignment4_template_YilinZhang-_files/figure-html/unnamed-chunk-2-1.png" class="img-fluid figure-img" width="672"></p>
+</figure>
+</div>
+</div>
+</div>
 </section>
 <section id="remember" class="level3">
 <h3 class="anchored" data-anchor-id="remember">Remember</h3>

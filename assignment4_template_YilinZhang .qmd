@@ -45,6 +45,58 @@ These data is helpful for exploring the positive impact of different genres of m
 
 -   
 
+### Data Preparation
+
+```{r}
+library(tidyverse)
+library(janitor)
+
+# reading data
+music_raw <- read_csv("data/mxmh_survey_results.csv") |> 
+  clean_names()
+
+# transfrom frequency text into numerical value
+freq_map <- c("Never" = 0, "Rarely" = 1, "Sometimes" = 2, "Very frequently" = 3)
+
+# create and name new columns
+music <- music_raw |> 
+  mutate(across(starts_with("frequency_"), ~ freq_map[.x], .names = "num_{.col}"))
+
+# only keep the records which are not missing
+music_clean <- music |> 
+  filter(!is.na(anxiety), !is.na(depression), !is.na(insomnia), !is.na(ocd))
+
+glimpse(music_clean)
+
+```
+
+### Does listening to certain gernes help reduce anxiety?
+```{r}
+music_long <- music_clean |> 
+  select(anxiety, starts_with("num_frequency_")) |> 
+  pivot_longer(cols = starts_with("num_frequency_"),
+               names_to = "genre",
+               values_to = "frequency") |> 
+  mutate(
+    genre = str_remove(genre, "num_frequency_"),
+    genre = str_replace_all(genre, "_", " ") |> str_to_title()
+  )
+
+filtered <- music_long |> filter(frequency >= 2)
+
+ggplot(filtered, aes(x = reorder(genre, anxiety, median), y = anxiety)) +
+  geom_boxplot(fill = "skyblue") +
+  labs(
+    title = "Anxiety levels among frequent listeners of different music genres",
+    x = "Music Genre",
+    y = "Anxiety Score (0–10)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+
+```
+### Are some genres more helpful for other mental health issues?
+
 ### Remember
 
 Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
