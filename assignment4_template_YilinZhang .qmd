@@ -50,6 +50,7 @@ These data is helpful for exploring the positive impact of different genres of m
 ```{r}
 library(tidyverse)
 library(janitor)
+library(tidyr)
 
 # reading data
 music_raw <- read_csv("data/mxmh_survey_results.csv") |> 
@@ -70,7 +71,18 @@ glimpse(music_clean)
 
 ```
 
-### Does listening to certain gernes help reduce anxiety?
+### Remember
+
+Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+
+<!-- Task 2 Tab: Writing your blogpost -->
+
+## Blog post
+
+### What's in this section
+
+### 1.Does listening to certain gernes help reduce anxiety?
+
 ```{r}
 music_long <- music_clean |> 
   select(anxiety, starts_with("num_frequency_")) |> 
@@ -95,19 +107,129 @@ ggplot(filtered, aes(x = reorder(genre, anxiety, median), y = anxiety)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
 ```
-### Are some genres more helpful for other mental health issues?
 
-### Remember
+This box plot shows the distribution of self-reported anxiety levels among respondents who frequently listen to each type of music, that is, those concentrated on "sometimes" and "very frequently". We observed that Music genres such as "Country", "Classical" ,"Lo-fi" and so on have a positive moderating effect on anxiety, while music genres such as "Pop", "Rock" and "Video Game Music" are highly likely to make the subjects feel more anxious. This indicates that music genres with softer melodies, slower rhythms and light drumbeats are more effective in reducing anxiety.
 
-Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
+### 2.Are some genres more helpful for other mental health issues?
 
-<!-- Task 2 Tab: Writing your blogpost -->
+```{r}
+music_long_dep <- music_clean |> 
+  select(depression, starts_with("num_frequency_")) |> 
+  pivot_longer(cols = starts_with("num_frequency_"),
+               names_to = "genre",
+               values_to = "frequency") |> 
+  mutate(
+    genre = str_remove(genre, "num_frequency_"),
+    genre = str_replace_all(genre, "_", " ") |> str_to_title()
+  ) |> 
+  filter(frequency >= 2)
 
-## Blog post
+ggplot(music_long_dep, aes(x = reorder(genre, depression, median), y = depression)) +
+  geom_boxplot(fill = "plum") +
+  labs(
+    title = "Depression levels among frequent listeners of different music genres",
+    x = "Music Genre",
+    y = "Depression Score (0–10)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
 
-### What's in this section
+From the above chart, we can see that listeners who tend to listen to Classical, Gospel or Country music have relatively lower median scores for self-evaluation of depression tendencies, indicating that these types of music may have the potential to soothe depressive moods, or it could be that those who prefer such soft music are less likely to suffer from depression. On the contrary, listeners of Rock, Rap and Video Game Music have higher levels of depression, suggesting that these music genres may be insufficient in regulating emotions, or that their audience groups themselves have a higher risk of depression.
 
-Here is where you should write your blogpost! (Task 2)
+```{r}
+music_long_insomnia <- music_clean |> 
+  select(insomnia, starts_with("num_frequency_")) |> 
+  pivot_longer(cols = starts_with("num_frequency_"),
+               names_to = "genre",
+               values_to = "frequency") |> 
+  mutate(
+    genre = str_remove(genre, "num_frequency_"),
+    genre = str_replace_all(genre, "_", " ") |> str_to_title()
+  ) |> 
+  filter(frequency >= 2)
+
+ggplot(music_long_insomnia, aes(x = reorder(genre, insomnia, median), y = insomnia)) +
+  geom_boxplot(fill = "lightgreen") +
+  labs(
+    title = "Insomnia levels among frequent listeners of different music genres",
+    x = "Music Genre",
+    y = "Insomnia Score (0–10)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+This chart clearly compares the distribution differences in the degree of insomnia among groups that often listen to different music styles. We can see that listeners who tend to listen to Folk, Gospel or Country music have a relatively lower median score of self-evaluation of insomnia tendency, and the box is shorter, indicating that the feelings of most subjects are relatively concentrated. It indicates that these types of music may have a soothing effect on emotions, or that such listeners have less pressure to fall asleep. On the contrary, listeners of Jazz, EDM and Mental are more prone to insomnia problems, and the box is longer. The sleep conditions of the subjects are more polarized, and the effect of such music in regulating insomnia is relatively low.
+
+```{r}
+music_long_ocd <- music_clean |> 
+  select(ocd, starts_with("num_frequency_")) |> 
+  pivot_longer(cols = starts_with("num_frequency_"),
+               names_to = "genre",
+               values_to = "frequency") |> 
+  mutate(
+    genre = str_remove(genre, "num_frequency_"),
+    genre = str_replace_all(genre, "_", " ") |> str_to_title()
+  ) |> 
+  filter(frequency >= 2)
+
+ggplot(music_long_ocd, aes(x = reorder(genre, ocd, median), y = ocd)) +
+  geom_boxplot(fill = "salmon") +
+  labs(
+    title = "OCD levels among frequent listeners of different music genres",
+    x = "Music Genre",
+    y = "OCD Score (0–10)"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
+```
+
+This chart shows the self-evaluation scores of subjects who frequently enjoy different music styles regarding the degree of obsessive-compulsive disorder. The median OCD scores of the subjects in most styles are concentrated around 2 points, indicating that the majority of the subjects self-evaluate the degree of obsessive-compulsive disorder as not high. Among them, the lowest median was Gospel and Jazz, and the differences in the other music styles were relatively small. \### 3.Dose time spent listening to music affect mental health?
+
+```{r}
+music_clean <- music_clean |> 
+  mutate(hour_group = case_when(
+    hours_per_day < 1 ~ "<1h",
+    hours_per_day < 2 ~ "1–2h",
+    hours_per_day < 4 ~ "2–4h",
+    TRUE ~ "4+h"
+  ))
+
+ggplot(music_clean, aes(x = hours_per_day, y = anxiety)) +
+  geom_jitter(width = 0.2, alpha = 0.3, color = "gray") +
+  geom_smooth(method = "loess", color = "blue") +
+  labs(
+    title = "Relationship between listening time and anxiety",
+    x = "Hours Listening to Music per Day",
+    y = "Anxiety Score (0–10)"
+  ) +
+  theme_minimal()
+```
+
+The plot combines a scatter of individual data points with a LOSS-smoothed curve to show the relationship between daily time spent listening to music relates to self-evaluation. Among them, the duration of listening to songs was 0 to 3 hours, and the self-anxiety score was between 5 and 6 points. The curve slightly rose, indicating that the average anxiety score of the subjects who never listened or spent less than 3 hours a day would increase slightly with the market. Then, it was observed that the changing trend of the anxiety scores of the audience for 3 to 10 hours was stable, remaining at around 5.5 points with few fluctuations. Finally, let's look at the situation of listeners who listened to music for more than 10 hours. The blue line slightly decreased, indicating that the average anxiety score of the subjects who listened to music for an extremely long time every day might be slightly lower. However, this range has a smaller sample size and a wider confidence interval, making it difficult to draw a conclusion.
+
+```{r}
+music_long_health <- music_clean |>
+  select(while_working, anxiety, depression, insomnia, ocd) |>
+  pivot_longer(cols = anxiety:ocd, names_to = "condition", values_to = "score")
+
+ggplot(music_long_health, aes(x = while_working, y = score)) +
+  geom_violin(fill = "lightblue") +
+  facet_wrap(~condition, scales = "free_y") +
+  labs(
+    title = "Mental health scores by listening while working",
+    x = "Listen While Working?",
+    y = "Score"
+  ) +
+  theme_minimal()
+```
+
+1.  Anxiety group, the music listeners (Yes) : The upper middle part of the curve is wider, indicating that more people consider themselves to have high (6-8 points) or even extremely high (9-10 points) anxiety symptoms. Those who don't listen (No) : The distribution is relatively more likely to concentrate in the middle and lower reaches (2-6 points), and there are fewer people in the high range (8-10 points), which means a lower level of anxiety.
+2.  depression, Yes group has a higher density between 5 and 8 points; Group No has a higher proportion in the medium and low score range (2-5 points).
+3.  The Yes group for insomnia has a very wide range from 6 to 9, indicating that a considerable number of people who like to listen to music at work have a relatively high self-rated score. Group No, on the other hand, is more concentrated between 1 and 5 points.
+4.  Obsessive-compulsive Tendencies (OCD) : The density at the top (8-10 points) of the Yes group was significantly higher than that of the No group, while the No group was almost concentrated in the low scores (0-3). It is concluded that people who listen to music while working may have more severe obsessive-compulsive symptoms.
+5.  NA group: The sample size was small and the distribution was irregular, which could be ignored.
 
 ### Blogpost Structure
 
