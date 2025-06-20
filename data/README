@@ -1,0 +1,27 @@
+# Music & Mental Health Survey Analysis
+
+This project explores whether different music genres and listening habits affect mental health outcomes such as anxiety, depression, insomnia, and OCD.
+
+## Data Source
+
+- Dataset name: Music & Mental Health Survey  
+- Published by: Catherine Rasgaitis  
+- Source: [Kaggle Dataset](https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results)  
+- Type: Self-reported survey data
+
+## Main Research Questions
+
+- Whether frequent listening to certain genres if associated with lower anxiety, depression, insomnia, or OCD levels.
+- Whether certain genres are more effective for specific mental health concerns.
+- Whether listening conditions, such as listening while working or total hours per day might affect the mental health outcomes of music.
+
+## Folder Structure
+
+- mxmh_survey_results.csv: Original survey data set downloaded from Kaggle
+- report.qmd: Quarto report containing the blog post
+- report.html: The rendered HTML version of the analysis report
+- README.md: THis document
+
+## Ethics & Privacy
+
+The dataset is anonymized and self-reported. No sensitive personal information is included.

@@ -1,0 +1,27 @@
+ # Data Dictionary – Music & Mental Health Survey
+
+| Variable               | Description                                                                 |
+|------------------------|-----------------------------------------------------------------------------|
+| age                    | Age of the respondent (numeric)                                             |
+| hours_per_day          | Number of hours spent listening to music per day (numeric)                  |
+| while  working         | The respondent listen to music while working
+| anxiety                | Self-reported anxiety level (0–10 scale)                                    |
+| depression             | Self-reported depression level (0–10 scale)                                 |
+| insomnia               | Self-reported insomnia level (0–10 scale)                                   |
+| ocd                    | Self-reported OCD level (0–10 scale)                                        |
+| frequency_pop          | Frequency of listening to Pop music (0–3; 0 = Never, 3 = Very frequently)   |
+| frequency_classical    | Frequency of listening to Classical music (same scale)                      |
+| frequency_rock         | Frequency of listening to Rock music (same scale)                           |
+| frequency_video_game   | Frequency of listening to Video Game Music (same scale)                     |
+| frequency_country      | Frequency of listening to Country (same scale)                              |                                            |
+| frequency_Edm          | Frequency of listening to edm (same scale)                                  |
+| frequency_K_pop        | Frequency of listening to k_pop (same scale)                                |
+| frequency_R&B          | Frequency of listening to r&b (same scale)                                  |
+| frequency_Gospel       | Frequency of listening to gospel (same scale)                               |
+| frequency_rap          | Frequency of listening to rap (same scale)                                  |
+| frequency_jazz         | Frequency of listening to jazz (same scale)                                 |
+| frequency_pop          | Frequency of listening to pop (same scale)                                  |
+| frequency_latin        | Frequency of listening to latin (same scale)                                |
+| frequency_folk         | Frequency of listening to folk (same scale)                                 |
+| frequency_hip_hop      | Frequency of listening to hip_hop (same scale)                              |
+| frequency_lofi         | Frequency of listening to lofi (same scale)                                 |

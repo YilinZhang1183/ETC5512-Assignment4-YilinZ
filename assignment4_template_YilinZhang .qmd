@@ -1,5 +1,5 @@
 ---
-title: "Do people who frequently listen to certain music genres report better or worse mental health outcomes??"
+title: "Can music improve mental health?"
 subtitle: "Assignment 4 ETC5512"
 author: "Yilin Zhang"
 format: html
@@ -25,9 +25,9 @@ These questions aim to provide insights into how music could be a personalized, 
 
 ### Data Set and Suitability
 
-In order to solve my doubts, I uses the "Music & Mental Health Survey" data set, which is published on Kaggle by Catherine Rasgaitis. This data set contains 736 public questionnaire surveys from Google.
+In order to solve my doubts, I uses the "Music & Mental Health Survey" data set, which is a non-probability public sample from a Google Form survey on Kaggle by Catherine Rasgaitis. This data set contains 736 public questionnaire surveys from Google.
 
-This data set is highly suitable as the foundation for conducting research.
+Thus this data set is highly suitable as the foundation for conducting research.
 
 -   Listening preference: frequency of listening to specific genres, Music style preference, Primary streaming platform.
 
@@ -43,7 +43,36 @@ These data is helpful for exploring the positive impact of different genres of m
 
 -   Source: \[Kaggle Dataset\](<https://www.kaggle.com/datasets/catherinerasgaitis/mxmh-survey-results>)
 
--   
+### Data Dictionary – Music & Mental Health Survey
+
+    | Variable | Description |
+    |------------------|------------------------------------------------------|
+    | age | Age of the respondent (numeric) |
+    | hours_per_day | Number of hours spent listening to music per day (numeric) |
+    | while_working | Whether the respondent listens to music while working (Yes/No) |
+    | anxiety | Self-reported anxiety level (0–10 scale) |
+    | depression | Self-reported depression level (0–10 scale) |
+    | insomnia | Self-reported insomnia level (0–10 scale) |
+    | ocd | Self-reported OCD level (0–10 scale) |
+    | frequency_pop | Frequency of listening to Pop music (0–3; 0 = Never, 3 = Very frequently) |
+    | frequency_classical | Frequency of listening to Classical music (same scale) |
+    | frequency_rock | Frequency of listening to Rock music (same scale) |
+    | frequency_video_game | Frequency of listening to Video Game Music (same scale) |
+    | frequency_country | Frequency of listening to Country music (same scale) |
+    | frequency_Edm | Frequency of listening to EDM music (same scale) |
+    | frequency_K_pop | Frequency of listening to K-pop (same scale) |
+    | frequency_R&B | Frequency of listening to R&B (same scale) |
+    | frequency_Gospel | Frequency of listening to Gospel music (same scale) |
+    | frequency_rap | Frequency of listening to Rap music (same scale) |
+    | frequency_jazz | Frequency of listening to Jazz (same scale) |
+    | frequency_latin | Frequency of listening to Latin music (same scale) |
+    | frequency_folk | Frequency of listening to Folk music (same scale) |
+    | frequency_hip_hop | Frequency of listening to Hip Hop music (same scale) |
+    | frequency_lofi | Frequency of listening to Lo-fi music (same scale) |
+
+### Ethical Considerations
+
+This data set is composed of self-evaluation questionnaires publicly collected by Google, which include selection bias, subjective judgment and non-standardized responses. Personal identity information is not included in the dataset, and the possibility of re-identification due to privacy leakage is low. However, mental health data is sensitive private information. Caution should be exercised when analyzing it. The results should only be used as a reference and should not be over-interpreted.
 
 ### Data Preparation
 
@@ -71,17 +100,17 @@ glimpse(music_clean)
 
 ```
 
-### Remember
-
-Please mention any additional files that you want the markers to review, eg. read me, meta data etc.
-
 <!-- Task 2 Tab: Writing your blogpost -->
 
 ## Blog post
 
-### What's in this section
+### Motivation
 
-### 1.Does listening to certain gernes help reduce anxiety?
+I have always been a person who loves to appreciate music very much and is willing to try listening to various different music styles. When studying, I often complete tasks while listening to classical music, which makes me more concentrated. When taking a walk in the evening, jazz music makes me feel that the whole world becomes romantic. When I'm feeling down, country music can soothe my negative emotions. Music has almost become an indispensable part of my life.
+
+It is precisely because of this close connection that I began to wonder: Do others also regulate their emotions through music? Do different music styles have different effects on improving mental health? These questions have become the starting point of my data analysis this time.
+
+### 1. Does listening to certain genres help reduce anxiety?
 
 ```{r}
 music_long <- music_clean |> 
@@ -108,9 +137,9 @@ ggplot(filtered, aes(x = reorder(genre, anxiety, median), y = anxiety)) +
 
 ```
 
-This box plot shows the distribution of self-reported anxiety levels among respondents who frequently listen to each type of music, that is, those concentrated on "sometimes" and "very frequently". We observed that Music genres such as "Country", "Classical" ,"Lo-fi" and so on have a positive moderating effect on anxiety, while music genres such as "Pop", "Rock" and "Video Game Music" are highly likely to make the subjects feel more anxious. This indicates that music genres with softer melodies, slower rhythms and light drumbeats are more effective in reducing anxiety.
+This box plot shows the distribution of self-reported anxiety levels among respondents who frequently listen to each type of music, that is, those concentrated on "sometimes" and "very frequently". We observed that Music genres such as "Country", "Classical" ,"Edm" and so on have a positive moderating effect on anxiety, while music genres such as "Pop", "Rock" and "Video Game Music" are highly likely to make the subjects feel more anxious. This indicates that music genres with softer melodies, slower rhythms and light drumbeats are more effective in reducing anxiety.
 
-### 2.Are some genres more helpful for other mental health issues?
+### 2. Are some genres more helpful for other mental health issues?
 
 ```{r}
 music_long_dep <- music_clean |> 
@@ -185,7 +214,7 @@ ggplot(music_long_ocd, aes(x = reorder(genre, ocd, median), y = ocd)) +
   theme(axis.text.x = element_text(angle = 45, hjust = 1))
 ```
 
-This chart shows the self-evaluation scores of subjects who frequently enjoy different music styles regarding the degree of obsessive-compulsive disorder. The median OCD scores of the subjects in most styles are concentrated around 2 points, indicating that the majority of the subjects self-evaluate the degree of obsessive-compulsive disorder as not high. Among them, the lowest median was Gospel and Jazz, and the differences in the other music styles were relatively small. \### 3.Dose time spent listening to music affect mental health?
+This chart shows the self-evaluation scores of subjects who frequently enjoy different music styles regarding the degree of obsessive-compulsive disorder. The median OCD scores of the subjects in most styles are concentrated around 2 points, indicating that the majority of the subjects self-evaluate the degree of obsessive-compulsive disorder as not high. Among them, the lowest median was Gospel and Jazz, and the differences in the other music styles were relatively small. \### 3. Dose time spent listening to music affect mental health?
 
 ```{r}
 music_clean <- music_clean |> 
@@ -231,24 +260,52 @@ ggplot(music_long_health, aes(x = while_working, y = score)) +
 4.  Obsessive-compulsive Tendencies (OCD) : The density at the top (8-10 points) of the Yes group was significantly higher than that of the No group, while the No group was almost concentrated in the low scores (0-3). It is concluded that people who listen to music while working may have more severe obsessive-compulsive symptoms.
 5.  NA group: The sample size was small and the distribution was irregular, which could be ignored.
 
-### Blogpost Structure
+```{r}
+music_heat <- music_clean |>
+  select(anxiety, depression, insomnia, ocd, starts_with("num_frequency_")) |>
+  pivot_longer(cols = starts_with("num_frequency_"),
+               names_to = "genre",
+               values_to = "frequency") |>
+  mutate(
+    genre = str_remove(genre, "num_frequency_"),
+    genre = str_replace_all(genre, "_", " ") |> str_to_title()
+  ) |>
+  filter(frequency >= 2) |>
+  pivot_longer(cols = anxiety:ocd,
+               names_to = "condition",
+               values_to = "score") |>
+  group_by(genre, condition) |>
+  summarise(mean_score = mean(score, na.rm = TRUE), .groups = "drop")
 
-There is no strict structure for you to follow. However, here is a skeleton structure you may find helpful.
+ggplot(music_heat, aes(x = genre, y = condition, fill = mean_score)) +
+  geom_tile(color = "white") +
+  scale_fill_gradient(low = "lightyellow", high = "red") +
+  labs(
+    title = "Average Mental Health Scores by Genre and Condition",
+    x = "Music Genre",
+    y = "Mental Health Condition",
+    fill = "Avg Score"
+  ) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(angle = 45, hjust = 1))
 
-1.  Title (is set at the top of this document)
-2.  Motivation\
-3.  Data\
-4.  Analysis\
-5.  Conclusions\
-6.  References
+```
 
 <!-- Task 3 Tab: Behind the Scenes -  -->
 
 ## Behind the Scenes
 
-### What's in this section
+1. One of the biggest challenges I encountered in this analysis was the cleaning and transformation of data. In the original dataset, there are many variable names related to the frequency of music styles that are very complex and repetitive, such as frequency_video_game or frequency_classical. In order to facilitate subsequent analysis and modeling, I have organized it into a more concise and usable form. Although these treatments may not sound particularly special, they form the basis of the entire analysis. Without this step, the subsequent visualization and group summary will be very difficult to carry out efficiently. This process made me realize that clean and tidy data is the prerequisite for high-quality analysis. The preparatory work in the early stage can improve the efficiency of the later work and reduce errors.
 
-Here is where you should tell us about your reflection on your analysis (Task 3).
+2. Besides, how to visualize mental health scores in an intuitive, understandable, diverse and interesting way also troubles me. At first, I only knew how to use box plots. But later, I found the report very boring. So I kept exploring and trying different visualization methods, such as violin plots and LOESS smooth curves, etc., to make the trend display clearer and enable the changing trends of four different psychological problems to be presented simultaneously. Although these attempts took a lot of time, they also enabled me to learn more data analysis techniques.
 
-Again, these are the details about **your** perspective and the gritty details behind the scenes of your analysis.
+3. This is also my first attempt to combine wild data scraping with GitHub to complete the R project. At the beginning, I was very unfamiliar with version control commands and file synchronization. However, through continuous practice, I mastered basic operations such as commit and push, and also learned how to track changes. This has made me understand more profoundly the importance of reputability for data science projects. In the future, in teamwork, these skills learned today can also play an important role.
+
+4. To my surprise, some music styles that were originally thought to relieve stress might instead lead to higher scores for anxiety or depression. This made me understand the significance of data analysis. One cannot draw conclusions merely based on subjective judgments. It is necessary to analyze and interpret based on a large amount of data, while also taking into account the protection of the privacy of the subjects and the limitations of the existing data.
+
+Overall, although the entire analysis process was not always smooth sailing and even involved many repeated failures and attempts, I have gained a lot of growth in data preparation, visualization, and reflective thinking, and have also developed a deeper understanding of "telling a good data story".
+
+### Conclusion
+
+Through this data collation and analysis, it can be seen that preferences for music types and the habit of listening to music may be related to an individual's mental health outcomes. Although a causal relationship cannot be directly established, it still provides some personal insights for future research directions, music therapy design and personal health strategies. More importantly, this project has taught me technical skills, enabling me to learn to narrate with data and think critically in analysis.
 :::
